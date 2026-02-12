@@ -10,7 +10,7 @@ export default function Recipe() {
   const { toggleFavorite, isFavorite } = useFavorites();
 
   useEffect(() => {
-    fetch("/recipes.json")
+    fetch(`${import.meta.env.BASE_URL}recipes.json`)
       .then((res) => res.json())
       .then((data: Recipe[]) => {
         const found = data.find((r) => r.id.toString() === id);

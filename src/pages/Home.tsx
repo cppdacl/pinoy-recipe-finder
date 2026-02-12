@@ -13,7 +13,7 @@ export default function Home() {
   const location = useLocation();
 
   useEffect(() => {
-    fetch("/recipes.json")
+    fetch(`${import.meta.env.BASE_URL}recipes.json`)
       .then((res) => res.json())
       .then((data: Recipe[]) => setRecipes(data));
   }, []);
