@@ -12,7 +12,12 @@ export default function RecipeCard({ recipe }: Props) {
     <div className="card">
       <img
         className="card-image"
-        src={(recipe as any).image || "https://placehold.co/600x400"}
+        src={
+          (recipe as any).image
+            ? import.meta.env.BASE_URL +
+              (recipe as any).image.replace(/^\/+/, "")
+            : "https://placehold.co/600x400"
+        }
         alt={recipe.name}
         onError={(e) =>
           ((e.currentTarget as HTMLImageElement).src =

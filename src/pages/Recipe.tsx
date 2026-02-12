@@ -33,7 +33,12 @@ export default function Recipe() {
         </button>
       </div>
       <img
-        src={(recipe as any).image || "https://placehold.co/600x400"}
+        src={
+          (recipe as any).image
+            ? import.meta.env.BASE_URL +
+              (recipe as any).image.replace(/^\/+/, "")
+            : "https://placehold.co/600x400"
+        }
         alt={recipe.name}
       />
       <p>{recipe.description}</p>
