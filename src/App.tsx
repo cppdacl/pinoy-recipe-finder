@@ -8,7 +8,7 @@ import "./index.css";
 export default function App() {
   return (
     <FavoritesProvider>
-      <Router>
+      <Router basename="/pinoy-recipe-finder/">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/favorites" element={<Home />} />
