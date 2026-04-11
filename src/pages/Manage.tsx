@@ -158,7 +158,7 @@ export default function Manage() {
                 <div className="sidebar-header">
                     <button
                         className="manage-btn-add"
-                        onClick={() => navigate(-1)}
+                        onClick={() => navigate("/")}
                         title="Go back"
                     >
                         ←
