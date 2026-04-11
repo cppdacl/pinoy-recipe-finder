@@ -26,7 +26,11 @@ export default function SearchBar({ value, onChange }: Props) {
         </div>
         <button
           className="favorites-btn"
-          onClick={toggleShowFavorites}
+          onClick={() => {
+            toggleShowFavorites();
+            if (!showFavorites) navigate('/favorites');
+            else navigate('/');
+          }}
           title="View Favorites"
           style={{ backgroundColor: showFavorites ? "#4a13af" : undefined }}
         >
@@ -49,11 +53,7 @@ export default function SearchBar({ value, onChange }: Props) {
       </div>
       <button
         className="favorites-btn"
-        onClick={() => {
-          toggleShowFavorites();
-          if (!showFavorites) navigate('/favorites');
-          else navigate('/');
-        }}
+        onClick={() => navigate('/manage')}
         title="Manage Recipes"
       >
         <svg
