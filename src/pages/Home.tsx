@@ -12,8 +12,6 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { favorites, showFavorites } = useFavorites();
-  const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     fetchRecipes()
