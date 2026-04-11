@@ -404,3 +404,7 @@ header {
   background: #e04040;
   color: white;
 }
+
+.sidebar-header {
+  justify-content: space-between;
+}

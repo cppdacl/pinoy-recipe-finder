@@ -156,6 +156,13 @@ export default function Manage() {
         <div className="manage-layout">
             <aside className="manage-sidebar">
                 <div className="sidebar-header">
+                    <button
+                        className="manage-btn-add"
+                        onClick={() => navigate(-1)}
+                        title="Go back"
+                    >
+                        ←
+                    </button>
                     <span>Recipes</span>
                     <button
                         className="manage-btn-add"
