@@ -29,6 +29,7 @@ export default function Manage() {
     const editingId = id ?? null;
 
     const [recipes, setRecipes] = useState<Recipe[]>([]);
+    const [sidebarSearch, setSidebarSearch] = useState("");
     const [form, setForm] = useState<FormState>(EMPTY_FORM);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string>("");
@@ -171,6 +172,10 @@ export default function Manage() {
         },
     });
 
+    const filteredRecipes = recipes.filter((r) =>
+        r.name.toLowerCase().includes(sidebarSearch.toLowerCase())
+    );
+
     return (
         <div className="manage-layout">
             <aside className="manage-sidebar">
@@ -191,8 +196,17 @@ export default function Manage() {
                         +
                     </button>
                 </div>
+                <div className="sidebar-search-wrapper">
+                    <input
+                        className="sidebar-search-input"
+                        type="text"
+                        placeholder="Search..."
+                        value={sidebarSearch}
+                        onChange={(e) => setSidebarSearch(e.target.value)}
+                    />
+                </div>
                 <ul className="recipe-list">
-                    {recipes.map((r) => (
+                    {filteredRecipes.map((r) => (
                         <li
                             key={r._id}
                             className={`recipe-list-item ${editingId === r._id ? "active" : ""}`}
