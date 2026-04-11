@@ -1,12 +1,14 @@
 const BASE = 'https://pinoy-recipe-finder-api.onrender.com/api';
 
 export async function fetchRecipes() {
+  console.log("Fetching recipes...");
   const res = await fetch(`${BASE}/recipes`);
   if (!res.ok) throw new Error('Failed to fetch recipes');
   return res.json();
 }
 
 export async function fetchRecipe(id: number) {
+  console.log("Fetching recipe " + id);
   const res = await fetch(`${BASE}/recipes/${id}`);
   if (!res.ok) throw new Error('Recipe not found');
   return res.json();
