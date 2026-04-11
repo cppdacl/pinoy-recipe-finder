@@ -7,8 +7,8 @@ import "./index.css";
 
 export default function App() {
   return (
-    <FavoritesProvider>
-      <Router basename="/">
+    <Router basename="/">
+      <FavoritesProvider>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/favorites" element={<Home />} />
@@ -16,7 +16,7 @@ export default function App() {
           <Route path="/manage" element={<Manage />} />
           <Route path="/manage/:id" element={<Manage />} />
         </Routes>
-      </Router>
-    </FavoritesProvider>
+      </FavoritesProvider>
+    </Router>
   );
 }
