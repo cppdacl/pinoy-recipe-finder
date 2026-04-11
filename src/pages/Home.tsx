@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import type { Recipe } from "../types/Recipe";
 import RecipeCard from "../components/RecipeCard";
 import SearchBar from "../components/SearchBar";
