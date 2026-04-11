@@ -58,7 +58,7 @@ export default function Home() {
       {!loading && !error && filtered.length > 0 && (
         <div className="grid">
           {filtered.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
+            <RecipeCard key={recipe._id} recipe={recipe} />
           ))}
         </div>
       )}

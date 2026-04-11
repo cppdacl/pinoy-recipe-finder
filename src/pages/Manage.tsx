@@ -26,7 +26,7 @@ const EMPTY_FORM: FormState = {
 export default function Manage() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const editingId = id ? parseInt(id) : null;
+    const editingId = id ?? null;
 
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [form, setForm] = useState<FormState>(EMPTY_FORM);
@@ -113,7 +113,7 @@ export default function Manage() {
         try {
             if (editingId) {
                 const updated: Recipe = await updateRecipe(editingId, data);
-                setRecipes((prev) => prev.map((r) => (r.id === editingId ? updated : r)));
+                setRecipes((prev) => prev.map((r) => (r._id === editingId ? updated : r)));
                 setFeedback("Recipe updated successfully.");
                 setImageFile(null);
             } else {
@@ -124,7 +124,7 @@ export default function Manage() {
                 setImagePreview("");
                 if (fileInputRef.current) fileInputRef.current.value = "";
                 setFeedback("Recipe created successfully.");
-                navigate(`/manage/${created.id}`);
+                navigate(`/manage/${created._id}`);
             }
         } catch (e: any) {
             setFeedback(e.message ?? "Something went wrong.");
@@ -133,11 +133,11 @@ export default function Manage() {
         }
     };
 
-    const onDelete = async (recipeId: number) => {
+    const onDelete = async (recipeId: string) => {
         if (!confirm("Delete this recipe?")) return;
         try {
             await deleteRecipe(recipeId);
-            setRecipes((prev) => prev.filter((r) => r.id !== recipeId));
+            setRecipes((prev) => prev.filter((r) => r._id !== recipeId));
             if (editingId === recipeId) navigate("/manage");
         } catch {
             setFeedback("Failed to delete recipe.");
@@ -175,13 +175,13 @@ export default function Manage() {
                 <ul className="recipe-list">
                     {recipes.map((r) => (
                         <li
-                            key={r.id}
-                            className={`recipe-list-item ${editingId === r.id ? "active" : ""}`}
+                            key={r._id}
+                            className={`recipe-list-item ${editingId === r._id ? "active" : ""}`}
                         >
-                            <span onClick={() => navigate(`/manage/${r.id}`)}>{r.name}</span>
+                            <span onClick={() => navigate(`/manage/${r._id}`)}>{r.name}</span>
                             <button
                                 className="delete-btn"
-                                onClick={() => onDelete(r.id)}
+                                onClick={() => onDelete(r._id)}
                                 title="Delete"
                             >
                                 ✕

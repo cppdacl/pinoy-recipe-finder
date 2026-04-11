@@ -13,7 +13,7 @@ export default function RecipeDetail() {
 
   useEffect(() => {
     if (!id) return;
-    fetchRecipe(parseInt(id))
+    fetchRecipe(id)
       .then(setRecipe)
       .catch(() => setRecipe(null))
       .finally(() => setLoading(false));
@@ -38,8 +38,7 @@ export default function RecipeDetail() {
         src={recipe.image || "https://placehold.co/600x400"}
         alt={recipe.name}
         onError={(e) =>
-        ((e.currentTarget as HTMLImageElement).src =
-          "https://placehold.co/600x400")
+          ((e.currentTarget as HTMLImageElement).src = "https://placehold.co/600x400")
         }
       />
       <p>{recipe.description}</p>
@@ -60,11 +59,11 @@ export default function RecipeDetail() {
           className="recipe-page-button"
           onClick={() => toggleFavorite(recipe)}
         >
-          {isFavorite(recipe.id) ? "Remove from Favorites" : "Add to Favorites"}
+          {isFavorite(recipe._id) ? "Remove from Favorites" : "Add to Favorites"}
         </button>
         <button
           className="recipe-page-button"
-          onClick={() => navigate(`/manage/${recipe.id}`)}
+          onClick={() => navigate(`/manage/${recipe._id}`)}
         >
           Edit Recipe
         </button>

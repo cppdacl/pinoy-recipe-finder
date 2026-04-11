@@ -24,7 +24,7 @@ export default function RecipeCard({ recipe }: Props) {
         <p>{recipe.description}</p>
         <button
           className="button"
-          onClick={() => navigate(`/recipe/${recipe.id}`)}
+          onClick={() => navigate(`/recipe/${recipe._id}`)}
         >
           View Recipe
         </button>
