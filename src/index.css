@@ -420,10 +420,10 @@ header {
   justify-content: center;
   gap: 8px;
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.2s, background 0.2s, scale 0.2s;
   position: relative;
   min-height: 120px;
-  background: var(--bg-primary);
+  background: var(--bg-card);
 }
 
 .image-upload-area:hover {
@@ -447,14 +447,14 @@ header {
 }
 
 .upload-icon {
-  font-size: 2rem;
-  line-height: 1;
-  transition: transform 0.2s;
+  color: var(--text-secondary);
+  transition: transform 0.2s, color 0.2s;
 }
 
 .image-upload-area:hover .upload-icon,
 .image-upload-area.dragging .upload-icon {
   transform: translateY(-4px);
+  color: var(--purple);
 }
 
 .upload-label {
