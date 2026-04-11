@@ -32,6 +32,7 @@ export default function Manage() {
     const [form, setForm] = useState<FormState>(EMPTY_FORM);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string>("");
+    const [dragging, setDragging] = useState(false);
     const [errors, setErrors] = useState<Partial<FormState & { image: string }>>({});
     const [submitting, setSubmitting] = useState(false);
     const [feedback, setFeedback] = useState("");
@@ -69,12 +70,30 @@ export default function Manage() {
             .finally(() => setLoadingForm(false));
     }, [editingId]);
 
-    const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
+    const applyFile = (file: File) => {
+        if (!file.type.startsWith("image/")) return;
         setImageFile(file);
         setImagePreview(URL.createObjectURL(file));
         setErrors((prev) => ({ ...prev, image: undefined }));
+    };
+
+    const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) applyFile(file);
+    };
+
+    const onDragOver = (e: React.DragEvent) => {
+        e.preventDefault();
+        setDragging(true);
+    };
+
+    const onDragLeave = () => setDragging(false);
+
+    const onDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        setDragging(false);
+        const file = e.dataTransfer.files?.[0];
+        if (file) applyFile(file);
     };
 
     const validate = () => {
@@ -227,13 +246,24 @@ export default function Manage() {
                             {imagePreview && (
                                 <img className="image-preview" src={imagePreview} alt="Preview" />
                             )}
-                            <input
-                                ref={fileInputRef}
-                                type="file"
-                                accept="image/*"
-                                className={`manage-input file-input ${errors.image ? "input-error" : ""}`}
-                                onChange={onImageChange}
-                            />
+                            <div
+                                className={`image-upload-area ${dragging ? "dragging" : ""} ${errors.image ? "input-error" : ""}`}
+                                onDragOver={onDragOver}
+                                onDragLeave={onDragLeave}
+                                onDrop={onDrop}
+                            >
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={onImageChange}
+                                />
+                                <div className="upload-icon">🖼️</div>
+                                <p className="upload-label">
+                                    {dragging ? "Drop it!" : <><span>Click to upload</span> or drag & drop</>}
+                                </p>
+                                <p className="upload-sub">PNG, JPG, WEBP up to 10MB</p>
+                            </div>
                             {errors.image && <span className="error-msg">{errors.image}</span>}
                         </div>
 
