@@ -22,13 +22,6 @@ export default function Home() {
       .finally(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
-    if (showFavorites && location.pathname !== "/favorites")
-      navigate("/favorites", { replace: true });
-    else if (!showFavorites && location.pathname === "/favorites")
-      navigate("/", { replace: true });
-  }, [showFavorites]);
-
   const listToShow = showFavorites ? favorites : recipes;
 
   const filtered = listToShow.filter((recipe) => {

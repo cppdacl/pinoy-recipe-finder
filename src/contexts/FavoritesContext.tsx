@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import type { Recipe } from "../types/Recipe";
 import { fetchFavorites, setFavorite } from "../api/recipes";
+import { useNavigate } from "react-router-dom";
 
 interface FavoritesContextType {
   favorites: Recipe[];
@@ -14,8 +15,11 @@ interface FavoritesContextType {
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
 
 export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
+  const navigate = useNavigate();
   const [favorites, setFavorites] = useState<Recipe[]>([]);
-  const [showFavorites, setShowFavorites] = useState(false);
+  const [showFavorites, setShowFavorites] = useState(
+    () => window.location.pathname === '/favorites'
+  );
 
   useEffect(() => {
     fetchFavorites().then(setFavorites).catch(() => { });
@@ -35,7 +39,14 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
 
   const isFavorite = (id: string) => favorites.some((r) => r._id === id);
 
-  const toggleShowFavorites = () => setShowFavorites((prev) => !prev);
+  const toggleShowFavorites = () => {
+    setShowFavorites((prev) => {
+      const next = !prev;
+      if (next) navigate('/favorites');
+      else navigate('/');
+      return next;
+    });
+  };
 
   return (
     <FavoritesContext.Provider value={{ favorites, toggleFavorite, isFavorite, showFavorites, toggleShowFavorites }}>

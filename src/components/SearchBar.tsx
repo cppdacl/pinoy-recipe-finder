@@ -49,7 +49,11 @@ export default function SearchBar({ value, onChange }: Props) {
       </div>
       <button
         className="favorites-btn"
-        onClick={() => navigate("/manage")}
+        onClick={() => {
+          toggleShowFavorites();
+          if (!showFavorites) navigate('/favorites');
+          else navigate('/');
+        }}
         title="Manage Recipes"
       >
         <svg
